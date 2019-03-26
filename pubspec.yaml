@@ -5,6 +5,7 @@ dependencies:
   flutter:
     sdk: flutter
   unicorndial: ^1.1.5
+  pie_chart: ^0.8.0
 
   video_player: ^0.10.0+2
 
