@@ -7,6 +7,7 @@ dependencies:
   unicorndial: ^1.1.5
   pie_chart: ^0.8.0
   charts_flutter: ^0.6.0
+  cloud_firestore: ^0.9.7
 
   video_player: ^0.10.0+2
 

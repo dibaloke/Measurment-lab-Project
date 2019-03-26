@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:unicorndial/unicorndial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Security extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,20 @@ class Example extends StatefulWidget {
 }
 
 class _Example extends State<Example> {
+
+  //Reference to firebase instance
+
+
+ var firestore_reference_Security=Firestore.instance.collection('user').document('Security');
+
+                        
+
+
+
+
+
+
+  
   //security_state_counter
   void security_state_counter_func(val) {
     if (val == true) {
@@ -27,6 +43,9 @@ class _Example extends State<Example> {
     } else {
       security_state_counter--;
     }
+    firestore_reference_Security.updateData({'Security_State_Counter':security_state_counter}).catchError((e){
+                        print(e);
+                      });
     print(security_state_counter);
   }
 
@@ -160,9 +179,13 @@ class _Example extends State<Example> {
                   SizedBox(
                     width: 140,
                   ),
+                  //Laser
                   Checkbox(
                     onChanged: (bool val) {
                       security_state_counter_func(val);
+                      firestore_reference_Security.updateData({'laser':val}).catchError((e){
+                        print(e);
+                      });
 
                       setState(() {
                         _ischecked1 = val;
@@ -174,9 +197,13 @@ class _Example extends State<Example> {
                   SizedBox(
                     width: 2,
                   ),
+                  //RFID
                   Checkbox(
                     onChanged: (bool val) {
                       security_state_counter_func(val);
+                      firestore_reference_Security.updateData({'RFID':val}).catchError((e){
+                        print(e);
+                      });
 
                       setState(() {
                         _ischecked2 = val;
@@ -191,6 +218,9 @@ class _Example extends State<Example> {
                   Checkbox(
                     onChanged: (bool val) {
                       security_state_counter_func(val);
+                      firestore_reference_Security.updateData({'PIR':val}).catchError((e){
+                        print(e);
+                      });
 
                       setState(() {
                         _ischecked3 = val;
