@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "565592613899",
+    "firebase_url": "https://measurment-lab-project.firebaseio.com",
+    "project_id": "measurment-lab-project",
+    "storage_bucket": "measurment-lab-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565592613899:android:9b4568ada4bf0050",
+        "android_client_info": {
+          "package_name": "com.example.dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565592613899-7suvsu8q2gljaeif3mnkoo2d69c8vklj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dashboard",
+            "certificate_hash": "28c3f8633c132e288a190d39dcfb76acd9caaa79"
+          }
+        },
+        {
+          "client_id": "565592613899-d5q0fs8o1rekqtarkv4a42nvidavn8bl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeGR1h-kb6UWfhe_1Mdi9yQmG3uosAlyQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565592613899-d5q0fs8o1rekqtarkv4a42nvidavn8bl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
