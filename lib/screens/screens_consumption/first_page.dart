@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
- 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+ var firestore_refernce_cfl_bedroom=Firestore.instance.collection('/Loads/CFL Light/Rooms').document('Bedroom');
+
+     getquery() async {
+    var a= await firestore_refernce_cfl_bedroom.get();
+    int i=0;
+    while (true) {
+      if(a[i.toString()]==null){
+        break;
+      }
+      else{
+        print(a[i.toString()]);
+      }
+      i++;
+    }
+    
+    
+  }
 class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,14 +37,19 @@ class Chart extends StatefulWidget {
 }
 
 class _ChartState extends State<Chart> {
+
+
+  
 bool toggle = false;
   Map<String, double> dataMap = new Map();
-
+ double lightenergy=0;
+ double fanenergy=0;
+ double otherloadenergy=0;
   
   @override
   void initState() {
     super.initState();
-    dataMap.putIfAbsent("Light", () => 5);
+    dataMap.putIfAbsent("Light", () => lightenergy);
     dataMap.putIfAbsent("Fan", () => 3);
     dataMap.putIfAbsent("Other Loads", () => 2);
     
@@ -34,6 +57,7 @@ bool toggle = false;
 
   @override
   Widget build(BuildContext context) {
+   getquery();
     return PieChart(
       dataMap: dataMap,
       legendFontColor: Colors.blueGrey[900],
@@ -55,5 +79,15 @@ bool toggle = false;
       toggle = !toggle;
     });
   }
+
+   queryValues() async {
+   var total = 0.0;
+
+     
+  var docs = firestore_refernce_cfl_bedroom.snapshots();
+  
+  
+  print(docs);
+}
   
 }

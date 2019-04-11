@@ -6,20 +6,178 @@ import 'load_detail.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'dart:math';
 
+//Firestore References
 var firestore_reference_Automation =
-    Firestore.instance.collection('Automation').document('bedroom');
-List<bool> _switchvalues = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,
-false,false,false,false,false,false,false,false,false,false,false,false,false,
-false,false,false,false,false,false,false,false,false,false,false,false,false,false,
-false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,
-false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,
-false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,
-false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,
-false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,
-false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,
-false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+  Firestore.instance.collection('Automation').document('bedroom');
+var firestore_refernce_cfl_bedroom=Firestore.instance.collection('/Loads/CFL Light/Rooms').document('Bedroom');  
 
+List<bool> _switchvalues = [
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false
+];
+
+//?Watch
+List<Stopwatch> watch = [
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch(),
+  Stopwatch()
+];
 
 
 class FirstPage extends StatefulWidget {
@@ -30,8 +188,6 @@ class FirstPage extends StatefulWidget {
 }
 
 class FirstPageState extends State<FirstPage> {
-  
-
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Load> loadList;
   int count = 0;
@@ -62,10 +218,9 @@ class FirstPageState extends State<FirstPage> {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
-       
         return Slidable(
           delegate: SlidableDrawerDelegate(),
-                  child: Card(
+          child: Card(
             color: Colors.white,
             elevation: 2.0,
             child: ListTile(
@@ -81,21 +236,44 @@ class FirstPageState extends State<FirstPage> {
               subtitle: Text(this.loadList[position].date),
               trailing: Switch(
                 activeColor: Color.fromRGBO(247, 230, 0, 0.5),
-                value:getSwitchValue(position),
+                value: getSwitchValue(position),
                 onChanged: (bool value) {
-                 //!!!!!
+                  //!!!!!
                   //_switchvalues[position]=value;
-                //!!!!
+                  //!!!!
                   firestore_reference_Automation.updateData({
-                    this.loadList[position].pin:
-                         !_switchvalues[position]
+                    this.loadList[position].pin: !_switchvalues[position]
                   }).catchError((e) {
                     print(e);
                   });
 
                   setState(() {
                     // this.loadList[position].switchvalue = value;
-                     _switchvalues[position]=value;
+                    _switchvalues[position] = value;
+                  //?Watch
+                    if (value == true) {
+                      watch[position].start();
+                    } else if (value == false) {
+                      
+                      watch[position].stop();
+                      var timeSoFar =
+                          (watch[position].elapsedMilliseconds / 1000);
+
+
+                      var loadtype_placeholder=this.loadList[position].loadtype;
+                      var watt_placeholder=int.parse(this.loadList[position].watt);
+                      var energyplaceholder=watt_placeholder*timeSoFar;
+                      print("$position $timeSoFar $loadtype_placeholder");
+
+                      firestore_refernce_cfl_bedroom.updateData({
+                    position.toString():energyplaceholder
+                  }).catchError((e) {
+                    print(e);
+                  });
+
+                      
+                    }
+                    //?Watch
                   });
                 },
               ),
@@ -109,14 +287,21 @@ class FirstPageState extends State<FirstPage> {
             IconSlideAction(
               icon: Icons.delete,
               foregroundColor: Colors.red,
-              onTap: (){
-firestore_reference_Automation.updateData({this.loadList[position].pin:FieldValue.delete()}).whenComplete((){
-  print('Field Deleted');
-});
-_delete(context,this.loadList[position]);
+              onTap: () {
+                firestore_reference_Automation.updateData({
+                  this.loadList[position].pin: FieldValue.delete()
 
+                }).whenComplete(() {
+                  print('Field Deleted');
+                });
+                firestore_refernce_cfl_bedroom.updateData({
+                  position.toString(): FieldValue.delete()
+                  
+                }).whenComplete(() {
+                  print('Field Deleted');
+                });
+                _delete(context, this.loadList[position]);
               },
-
             )
           ],
         );
@@ -124,14 +309,9 @@ _delete(context,this.loadList[position]);
     );
   }
 
-   getSwitchValue(int position) {
-    
-    
-      // print(_switchvalues);
-      return _switchvalues[position];
-
-    
-   
+  getSwitchValue(int position) {
+    // print(_switchvalues);
+    return _switchvalues[position];
   }
 
   getPriorityIcon(int priority) {
@@ -150,7 +330,7 @@ _delete(context,this.loadList[position]);
         break;
       case 5:
         return AssetImages_list[4];
-        break;  
+        break;
 
       default:
         return Icon(Icons.keyboard_arrow_right);
@@ -166,16 +346,13 @@ _delete(context,this.loadList[position]);
   }
 
   void _showSnackBar(BuildContext context, String message) {
-    final snackBar = SnackBar(content: Text(message),action:SnackBarAction(
-      label:"OK" ,
-      onPressed: (){
-     
-
-
-
-      },
-
-    ) ,);
+    final snackBar = SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+        label: "OK",
+        onPressed: () {},
+      ),
+    );
     Scaffold.of(context).showSnackBar(snackBar);
   }
 
@@ -272,6 +449,7 @@ class FanImageAsset extends StatelessWidget {
     );
   }
 }
+
 class OtherImageAsset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
